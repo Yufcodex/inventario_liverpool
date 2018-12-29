@@ -18,4 +18,16 @@ router.post('/',async (req, res) => {
 	res.json({status: 'Guardado con exito.'});
 });
 
+router.put('/:id', async (req, res) => {
+	const {product_name, product_price, product_image} = req.body;
+	const newInventario = {product_name, product_price, product_image};
+	await Inventario.findByIdAndUpdate(req.params.id, newInventario);
+	res.json({status : 'Actualizado con exito.'});
+});
+
+router.delete('/:id',async (req, res) =>{
+	await Inventario.findByIdAndRemove(req.params.id);
+	res.json({status : 'Producto eliminado.'});
+})
+
 module.exports = router;
