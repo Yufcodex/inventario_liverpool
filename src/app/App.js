@@ -7,7 +7,8 @@ class App extends Component {
 		this.state = {
 			product_name: "",
 			product_price: "",
-			product_image: ""
+			product_image: "",
+			inventario: []
 		};
 		this.addProduct = this.addProduct.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -26,12 +27,43 @@ class App extends Component {
 		.then(data => {
 			console.log(data)
 			M.toast({html: 'Producto Guardado con exito'});
-			this.setState({product_name: '', product_price: '', product_image:''})
+			this.setState({product_name: '', product_price: '', product_image:''});
+			this.fetchInventario();
 		})
 		.catch(err => console.log(err));
 
 		console.log(this.state)
 		e.preventDefault();
+	}
+
+	deleteProd(id){
+		fetch('/api/inventario/'+id, {
+			method: 'DELETE',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}			
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data)
+			M.toast({html: 'Porducto borrado'});
+			this.fetchInventario();
+		})
+		.catch(err => console.log(err));
+	}
+
+	componentDidMount(){
+		this.fetchInventario();
+	}
+
+	fetchInventario(){
+		fetch('/api/inventario')
+		.then(res => res.json())
+		.then(data => {
+			this.setState({inventario: data})
+		})
+		.catch(err => console.log(err));
 	}
 
 	handleChange(e){
@@ -78,6 +110,33 @@ class App extends Component {
 							</div>
 						</div>
 						<div className="col s7">
+							<table>
+								<thead>
+									<tr>
+										<th>Producto</th>
+										<th>Precio</th>
+										<th>Imagen</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										this.state.inventario.map(prod => {
+											return(
+												<tr key={prod._id}>
+													<td>{prod.product_name}</td>
+													<td>{prod.product_price}</td>
+													<td>{prod.product_image}</td>
+													<td>
+														<button onClick={() => this.deleteProd(prod._id)}><i className="material-icons">delete</i></button>
+														<button style={{margin: '4px'}}><i className="material-icons">edit</i></button>
+													</td>
+												</tr>
+											)
+
+										})
+									}
+								</tbody>
+							</table>
 						</div>						
 					</div>
 				</div>
