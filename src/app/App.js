@@ -8,31 +8,51 @@ class App extends Component {
 			product_name: "",
 			product_price: "",
 			product_image: "",
-			inventario: []
+			inventario: [],
+			_id: ""
 		};
 		this.addProduct = this.addProduct.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	addProduct(e){
-		fetch('/api/inventario', {
-			method: 'POST',
-			body: JSON.stringify(this.state),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			}
-		})
-		.then(res => res.json())
-		.then(data => {
-			console.log(data)
-			M.toast({html: 'Producto Guardado con exito'});
-			this.setState({product_name: '', product_price: '', product_image:''});
-			this.fetchInventario();
-		})
-		.catch(err => console.log(err));
+		if(this.state._id){
+			fetch('/api/inventario/'+this.state._id, {
+				method: 'PUT',
+				body: JSON.stringify(this.state),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}				
+			})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data)
+				M.toast({html: 'Producto Actualizado con exito'});
+				this.setState({product_name: '', product_price: '', product_image:'', inventario: [], _id: ""});
+				this.fetchInventario();
+			})
+			.catch(err => console.log(err));
+		}
+		else{
+			fetch('/api/inventario', {
+				method: 'POST',
+				body: JSON.stringify(this.state),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data)
+				M.toast({html: 'Producto Guardado con exito'});
+				this.setState({product_name: '', product_price: '', product_image:'', inventario: [], _id: ""});
+				this.fetchInventario();
+			})
+			.catch(err => console.log(err));
+		}
 
-		console.log(this.state)
 		e.preventDefault();
 	}
 
@@ -51,6 +71,19 @@ class App extends Component {
 			this.fetchInventario();
 		})
 		.catch(err => console.log(err));
+	}
+
+	editProd(id){
+		fetch('/api/inventario/'+id)
+		.then(res => res.json())
+		.then(data => {
+			this.setState({
+				product_name: data.product_name,
+				product_price: data.product_price,
+				product_image: "",
+				_id: data._id			
+			});
+		});
 	}
 
 	componentDidMount(){
@@ -100,7 +133,7 @@ class App extends Component {
 										</div>
 										<div className="row">
 											<div className="input-field col s12">
-												<input name="product_image" type="file" value={this.state.product_image}/>
+												<input name="product_image" type="file" />
 											</div>
 										</div>	
 										<button type="submit"className="btn pink accent-4">Guardar
@@ -128,7 +161,7 @@ class App extends Component {
 													<td>{prod.product_image}</td>
 													<td>
 														<button onClick={() => this.deleteProd(prod._id)}><i className="material-icons">delete</i></button>
-														<button style={{margin: '4px'}}><i className="material-icons">edit</i></button>
+														<button onClick={() => this.editProd(prod._id)} style={{margin: '4px'}}><i className="material-icons">edit</i></button>
 													</td>
 												</tr>
 											)

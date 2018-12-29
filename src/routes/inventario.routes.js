@@ -4,11 +4,14 @@ const router = express.Router();
 const Inventario = require('../model/inventario');
 
 router.get('/',async (req, res) => {
-
 	const productos = await Inventario.find();
 	console.log(productos);
 	res.json(productos);
+});
 
+router.get('/:id',async (req, res) => {
+	const productos = await Inventario.findById(req.params.id);
+	res.json(productos);
 });
 
 router.post('/',async (req, res) => {
