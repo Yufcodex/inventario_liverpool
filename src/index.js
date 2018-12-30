@@ -16,7 +16,6 @@ app.use(express.json()); /*verifica que los datos enviados y recibidos sean tipo
 app.use('/api/inventario',require('./routes/inventario.routes'));
 
 //Static files
-//console.log(path.join(__dirname, 'pulic'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Starting server

@@ -7,7 +7,7 @@ class App extends Component {
 		this.state = {
 			product_name: "",
 			product_price: "",
-			product_image: "",
+			product_image: null,
 			inventario: [],
 			_id: ""
 		};
@@ -29,7 +29,7 @@ class App extends Component {
 			.then(data => {
 				console.log(data)
 				M.toast({html: 'Producto Actualizado con exito'});
-				this.setState({product_name: '', product_price: '', product_image:'', inventario: [], _id: ""});
+				this.setState({product_name: '', product_price: '', product_image:null, inventario: [], _id: ""});
 				this.fetchInventario();
 			})
 			.catch(err => console.log(err));
@@ -47,7 +47,7 @@ class App extends Component {
 			.then(data => {
 				console.log(data)
 				M.toast({html: 'Producto Guardado con exito'});
-				this.setState({product_name: '', product_price: '', product_image:'', inventario: [], _id: ""});
+				this.setState({product_name: '', product_price: '', product_image:null, inventario: [], _id: ""});
 				this.fetchInventario();
 			})
 			.catch(err => console.log(err));
@@ -80,7 +80,7 @@ class App extends Component {
 			this.setState({
 				product_name: data.product_name,
 				product_price: data.product_price,
-				product_image: "",
+				product_image: null,
 				_id: data._id			
 			});
 		});
@@ -106,6 +106,14 @@ class App extends Component {
 		});
 	}
 
+	fileSelected (event) {
+		console.log(event.target.files[0]);
+		let image = event.target.files[0];
+		this.setState({
+			product_image: image
+		});
+	}
+
 	render(){
 		return (
 			<div>
@@ -117,7 +125,7 @@ class App extends Component {
 
 				<div className="container">
 					<div className="row">
-						<div className="col s5">
+						<div className="col s5" style={{padding: '25px'}}>
 							<div className="card">
 								<div className="card-content">
 									<form onSubmit={this.addProduct}>
@@ -133,7 +141,7 @@ class App extends Component {
 										</div>
 										<div className="row">
 											<div className="input-field col s12">
-												<input name="product_image" type="file" />
+												<input name="product_image" type="file" onChange={this.fileSelected}/>
 											</div>
 										</div>	
 										<button type="submit"className="btn pink accent-4">Guardar
@@ -173,6 +181,14 @@ class App extends Component {
 						</div>						
 					</div>
 				</div>
+				<footer className="page-footer pink accent-4" style={{marginTop: '285px'}}>
+		          	<div className="footer-copyright pink accent-4">
+			            <div className="container pink accent-4">
+			            Fernando Eugenio Vidal Jimenéz
+			            <a className="grey-text text-lighten-4 right" href="#!">Buscar en Liverpool</a>
+			            </div>
+		          	</div>
+            	</footer>				
 			</div>	
 		)
 	}
