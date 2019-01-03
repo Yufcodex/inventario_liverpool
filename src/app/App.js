@@ -133,9 +133,15 @@ class App extends Component {
 		}
 		else{
 			this.setState({
+				product_name: "",
+				product_price: "",
+				product_image: null,
+				_id: "",
 				title: 'Inventario con React (MERN)',
-				footerSearch: 'Buscar en Liverpool'
-			});
+				footerSearch: 'Buscar en Liverpool',
+				product_search: "",
+				inventario_liv: []
+			});			
 			personalForm.classList.remove('hide');
 			liverpoolForm.classList.add('hide');
 		}
@@ -148,7 +154,7 @@ class App extends Component {
 		axios.get(URL)
 		.then(res => {
 			console.log(res.data);
-			this.setState({inventario_liv: res.data.contents[0].mainContent[3].contents[0].records})			
+			this.setState({inventario_liv: res.data.contents[0].mainContent[3].contents[0].records})	
 		})
 		.catch(err => console.log(err));		
 		e.preventDefault();		

@@ -17,7 +17,8 @@
     "babel-preset-react": "^6.24.1",
     "express": "^4.16.4",
     "mongoose": "^5.4.1",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "axios": "^0.18.0"
   },
   "devDependencies": {
     "react": "^16.7.0",
