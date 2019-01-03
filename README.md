@@ -3,7 +3,7 @@ Retos 1 y 2 inventarios liverpool
 
 Autor: Fernando Eugenio Vidal Jimenéz
 
-El desarrollo de esta prueba ya esta configurado multiplataforma es decir: opera en windows, mac o linux.
+El desarrollo de esta prueba ya esta configurado multiplataforma es decir: windows, mac o linux.
 Se recomienda uso de Google Chrome.
 
 Pre-requisitos
@@ -22,3 +22,4 @@ Para iniciar el proyecto necesitas:
 
 El proyecto tiene el stack MERN (Mongo Express React y Node).
 
+Nota importante: Para cambiar de formulario o vista dar click en el footer "Buscar en Liverpool" o "Inventario con React (MERN)".
