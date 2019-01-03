@@ -261,7 +261,7 @@ class App extends Component {
 												<tr key={prod.productId[0]}>
 													<td>{prod.productDisplayName[0]}</td>
 													<td>{prod.productPrice[0]}</td>
-													<td>{prod.image}</td>
+													<td><img src={prod['sku.smallImage']}/></td>
 												</tr>
 											)
 
